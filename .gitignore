@@ -2,3 +2,4 @@
 /.vscode
 /.idea
 /examples
+/src/convert.bash

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>462</width>
+    <height>680</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(194, 194, 194);
+QWidget {
+    background-color: #f0f0f0;  /* светло-серый фон */
+    color: #000000;  /* черный текст */
+}
+QPushButton {
+    background-color: #d3d3d3;  /* светло-серая кнопка */
+    color: #000000;  /* черный текст */
+    border: 1px solid #000000;  /* черная рамка */
+}
+QLineEdit {
+    background-color: #ffffff;  /* белое текстовое поле */
+    color: #000000;  /* черный текст */
+    border: 1px solid #000000;  /* черная рамка */
+}
+QRadioButton {
+    background-color: #f0f0f0;  /* фон радиокнопок */
+    color: #000000;  /* черный текст */
+}
+</string>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>431</width>
+      <height>661</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="chosen_files_field">
+       <item>
+        <widget class="QLabel" name="main_label">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::PreventContextMenu</enum>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(214, 214, 214);</string>
+         </property>
+         <property name="text">
+          <string>Добро пожаловать!
+Чтобы загрузить файлы используйте кнопку: &quot;Выбрать файлы&quot;
+Чтобы выбрать количество выходных файлов используйте кнопки для выбора
+ВАЖНО! Убедитесь, что выбранные вами файлы не открыты</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="chosen_files_label">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::PreventContextMenu</enum>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(214, 214, 214);</string>
+         </property>
+         <property name="text">
+          <string>Выбранные файлы</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="chosen_fiels_textEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhNoEditMenu</set>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="tabStopDistance">
+          <double>79.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="choose_files_btn">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(214, 214, 214);</string>
+         </property>
+         <property name="text">
+          <string>Выбрать файлы</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="files_number_field">
+         <item>
+          <widget class="QLabel" name="choose_files_number_label">
+           <property name="font">
+            <font>
+             <family>Calibri</family>
+             <pointsize>14</pointsize>
+            </font>
+           </property>
+           <property name="contextMenuPolicy">
+            <enum>Qt::PreventContextMenu</enum>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(214, 214, 214);border-radius: 2.19rem;</string>
+           </property>
+           <property name="text">
+            <string>Выберите количество выходных файлов</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="file_number_field">
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="many_files_rbtn">
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>несколько файлов</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="single_file_rbtn">
+             <property name="font">
+              <font>
+               <family>Calibri</family>
+               <pointsize>14</pointsize>
+              </font>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::ImhNoEditMenu</set>
+             </property>
+             <property name="text">
+              <string>единственный файл</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="start_calculating_btn">
+         <property name="font">
+          <font>
+           <family>Calibri</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(214, 214, 214);</string>
+         </property>
+         <property name="text">
+          <string>Начать рассчет</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
