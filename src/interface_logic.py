@@ -1,12 +1,17 @@
 from PySide6 import QtWidgets
+from PySide6.QtGui import QIcon
 
 from main_ui import Ui_MainWindow
 from start_calculating_logic import Calculator
 
+
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.main_window = QtWidgets.QMainWindow()
+        self.main_window: QtWidgets.QMainWindow = QtWidgets.QMainWindow()
+        self.icon_path: str = r'C:\Users\1234x\PycharmProjects\biolog\src\interface_icon.png'
+        self.app_icon: QIcon = QIcon(self.icon_path)
+        self.main_window.setWindowIcon(self.app_icon)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.main_window)
 
@@ -47,7 +52,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 QtWidgets.QMessageBox.warning(self,
                                               "Ошибка",
                                               "Выбирите файлы с расширениями .xls или .xlsx")
-                # BufferError()
 
         else:
             self.ui.chosen_fiels_textEdit.clear()
