@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets
 
 from main_ui import Ui_MainWindow
-
+from start_calculating_logic import Calculator
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -17,24 +17,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def buttons(self):
         self.ui.choose_files_btn.clicked.connect(self.open_files)
+        self.ui.start_calculating_btn.clicked.connect(self.calculate)
 
     def open_files(self):
+        files: list = QtWidgets.QFileDialog.getOpenFileNames()[0]
+        self.ui.chosen_fiels_textEdit.clear()
+        output: str = "\n".join(files)
+        self.ui.chosen_fiels_textEdit.setText(output)
+
+    def calculate(self):
         if any([self.ui.single_file_rbtn.isChecked(), self.ui.many_files_rbtn.isChecked()]):
-            if self.ui.single_file_rbtn.isChecked():
-                filepath: tuple = QtWidgets.QFileDialog.getOpenFileName()
-                if filepath[0]:
-                    self.ui.chosen_fiels_textEdit.clear()
-                    self.ui.chosen_fiels_textEdit.setText(filepath[0])
-                else:
-                    self.ui.chosen_fiels_textEdit.clear()
-                    self.ui.chosen_fiels_textEdit.setText("Вы не выбрали файл")
-            elif self.ui.many_files_rbtn.isChecked():
-                files: list = QtWidgets.QFileDialog.getOpenFileNames()[0]
-                self.ui.chosen_fiels_textEdit.clear()
-                output: str = ""
+            calculator: Calculator = Calculator()
+            files: list = self.ui.chosen_fiels_textEdit.toPlainText().split("\n")
+            try:
                 for file in files:
-                    output += file + "\n"
-                self.ui.chosen_fiels_textEdit.setText(output)
+                    if not(file.endswith(".xls")) and not(file.endswith(".xlsx")):
+                        raise BufferError()
+
+                if self.ui.single_file_rbtn.isChecked():
+                    calculator.calculate_files_for_one(files)
+                elif self.ui.many_files_rbtn.isChecked():
+                    calculator.calculate_files_for_many(files)
+
+                QtWidgets.QMessageBox.information(self,
+                                                  "Завершено",
+                                                  "Работа завершена, проверьте директорию с первым файлом в списке")
+                self.ui.chosen_fiels_textEdit.clear()
+            except BufferError:
+                QtWidgets.QMessageBox.warning(self,
+                                              "Ошибка",
+                                              "Выбирите файлы с расширениями .xls или .xlsx")
+                # BufferError()
+
         else:
             self.ui.chosen_fiels_textEdit.clear()
-            self.ui.chosen_fiels_textEdit.setText("Выберите количество файлов для загрузки!")
+            self.ui.chosen_fiels_textEdit.setText("Выберите количество файлов для вывода!")

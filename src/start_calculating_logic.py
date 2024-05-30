@@ -8,7 +8,7 @@ from functions import *
 
 class Calculator:
     @staticmethod
-    def fill_the_table(name: str):
+    def fill_the_table(name: str, dir: str) -> str:
         wb: xl.Workbook = xl.Workbook()
         ws = wb[wb.sheetnames[0]]
         ws.column_dimensions['A'].width = 40
@@ -20,8 +20,8 @@ class Calculator:
 
         for i in range(46, len(headers.indexes) + 46):
             ws["A" + str(i)] = headers.indexes[i - 46]
-        wb.save(f"output{name}.xlsx")
-        return f"output{name}.xlsx"
+        wb.save(rf"{dir}\\output{name}.xlsx")
+        return rf"{dir}\\output{name}.xlsx"
 
     @staticmethod
     def calculate_logic(input_path: str, output_path: str, column: int):
@@ -114,7 +114,7 @@ class Calculator:
         output_file.save(output_path)
 
     def calculate_files_for_one(self, files: list):
-        output_path: str = self.fill_the_table("")
+        output_path: str = self.fill_the_table("", os.path.dirname(files[0]))
         column: int = 2
         for file in files:
             flag: bool = False
@@ -132,11 +132,23 @@ class Calculator:
             if file.endswith(".xls") and not(file.endswith(".xlsx")):
                 file = convert_xls_to_xlsx(file)
                 flag = True
-            output_file: str = ""
-            for i in file.split("\\"):
-                if i.endswith(".xlsx"):
-                    output_file: str = self.fill_the_table("_" + i.rstrip(".xlsx"))
-                    break
+            output_file: str = self.fill_the_table("_" + os.path.basename(file).rstrip(".xlsx"), os.path.dirname(file))
             self.calculate_logic(file, output_file, 2)
             if flag:
                 os.remove(file)
+
+
+def calculate_files_for_many(files: list):
+    for file in files:
+        flag: bool = False
+        if file.endswith(".xls") and not(file.endswith(".xlsx")):
+            file = convert_xls_to_xlsx(file)
+            flag = True
+        output_file: str = ""
+        for i in file.split("\\"):
+            if i.endswith(".xlsx"):
+                output_file: str = Calculator.fill_the_table("_" + i.rstrip(".xlsx"), os.path.dirname(file))
+                break
+        Calculator.calculate_logic(file, output_file, 2)
+        if flag:
+            os.remove(file)

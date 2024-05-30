@@ -131,7 +131,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Biolog"))
         self.main_label.setText(_translate("MainWindow", "Добро пожаловать!\n"
 "Чтобы загрузить файлы используйте кнопку: \"Выбрать файлы\"\n"
 "Чтобы выбрать количество выходных файлов используйте кнопки для выбора\n"
