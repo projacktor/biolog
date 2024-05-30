@@ -4,7 +4,6 @@ import os
 
 import table_headers as headers
 from functions import *
-from adapter import convert_xls_to_xlsx
 
 
 class Calculator:
@@ -22,15 +21,22 @@ class Calculator:
         for i in range(46, len(headers.indexes) + 46):
             ws["A" + str(i)] = headers.indexes[i - 46]
         wb.save(f"output{name}.xlsx")
-        return "output.xlsx"
+        return f"output{name}.xlsx"
 
     @staticmethod
     def calculate_logic(input_path: str, output_path: str, column: int):
+        # open files
         output_file: xl.Workbook = xl.load_workbook(output_path)
         input_file: xl.Workbook = xl.load_workbook(input_path)
         output_sheet = output_file[output_file.sheetnames[0]]
         input_sheet = input_file[input_file.sheetnames[0]]
 
+        # fill plates header
+        plate_name: str = str(input_sheet.cell(row=4, column=1).value)
+        plate_name = plate_name[plate_name.find(":") + 1:].lstrip()
+        output_sheet.cell(row=1, column=column, value=plate_name)
+
+        # fill the dictionary with headers
         substrates: dict = dict()
         for i in range(2, len(headers.headers) + 2):
             substrates[headers.headers[i - 2]] = 0
@@ -105,14 +111,14 @@ class Calculator:
         output_sheet.cell(row=47, column=column, value=shenon_index)
         # output_sheet["B47"] = shenon_index
 
-        output_file.save("output.xlsx")
+        output_file.save(output_path)
 
     def calculate_files_for_one(self, files: list):
         output_path: str = self.fill_the_table("")
         column: int = 2
         for file in files:
             flag: bool = False
-            if file.endswith(".xls"):
+            if file.endswith(".xls") and not(file.endswith(".xlsx")):
                 file = convert_xls_to_xlsx(file)
                 flag = True
             self.calculate_logic(file, output_path, column)
@@ -122,17 +128,15 @@ class Calculator:
 
     def calculate_files_for_many(self, files: list):
         for file in files:
-            if file.endswith(".xls"):
+            flag: bool = False
+            if file.endswith(".xls") and not(file.endswith(".xlsx")):
                 file = convert_xls_to_xlsx(file)
+                flag = True
             output_file: str = ""
             for i in file.split("\\"):
                 if i.endswith(".xlsx"):
                     output_file: str = self.fill_the_table("_" + i.rstrip(".xlsx"))
                     break
             self.calculate_logic(file, output_file, 2)
-
-
-inst: Calculator = Calculator()
-inst.calculate_files_for_one([r"C:\Users\1234x\PycharmProjects\biolog\examples\Пример ввода_AZB1_1_1.xls",
-                              r"C:\Users\1234x\PycharmProjects\biolog\examples\file_1.xls",
-                              r"C:\Users\1234x\PycharmProjects\biolog\examples\file2.xlsx"])
+            if flag:
+                os.remove(file)
