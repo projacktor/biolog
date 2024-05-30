@@ -9,7 +9,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.main_window: QtWidgets.QMainWindow = QtWidgets.QMainWindow()
-        self.icon_path: str = r'C:\Users\1234x\PycharmProjects\biolog\src\interface_icon.png'
+        self.icon_path: str = r'C:\Users\1234x\PycharmProjects\biolog\src\assets\interface_icon.png'
         self.app_icon: QIcon = QIcon(self.icon_path)
         self.main_window.setWindowIcon(self.app_icon)
         self.ui = Ui_MainWindow()

@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets, QtGui
+from PySide6 import QtWidgets
 from interface_logic import MainWindow
 
 
@@ -6,7 +6,7 @@ def main():
     import sys
     app: QtWidgets.QApplication() = QtWidgets.QApplication(sys.argv)
     application = MainWindow()
-    app.setWindowIcon(QtGui.QIcon(application.icon_path))
+    app.setWindowIcon(application.app_icon)
     application.show()
     sys.exit(app.exec())
 
