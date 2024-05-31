@@ -1,1 +1,1 @@
-# Biolog interface for laboratory calculating
+# MetaBacTrack interface for laboratory calculating
