@@ -9,7 +9,7 @@ from functions import *
 class Calculator:
     @staticmethod
     def fill_the_table(name: str, dir: str) -> str:
-        wb: xl.Workbook = xl.Workbook()
+        wb = xl.Workbook()
         ws = wb[wb.sheetnames[0]]
         ws.column_dimensions['A'].width = 40
         for i in range(2, len(headers.headers) + 2):
@@ -24,36 +24,36 @@ class Calculator:
         return rf"{dir}\\output{name}.xlsx"
 
     @staticmethod
-    def calculate_logic(input_path: str, output_path: str, column: int):
+    def calculate_logic(input_path: str, output_path: str, column: int) -> None:
         # open files
-        output_file: xl.Workbook = xl.load_workbook(output_path)
-        input_file: xl.Workbook = xl.load_workbook(input_path)
+        output_file = xl.load_workbook(output_path)
+        input_file = xl.load_workbook(input_path)
         output_sheet = output_file[output_file.sheetnames[0]]
         input_sheet = input_file[input_file.sheetnames[0]]
 
         # fill plates header
-        plate_name: str = str(input_sheet.cell(row=4, column=1).value)
-        plate_name = plate_name[plate_name.find(":") + 1:].lstrip()
+        plate_name = str(input_sheet.cell(row=2, column=1).value)
+        # plate_name = plate_name[plate_name.find(":") + 1:].lstrip() # old method
         output_sheet.cell(row=1, column=column, value=plate_name)
 
         # fill the dictionary with headers
-        substrates: dict = dict()
+        substrates = dict()
         for i in range(2, len(headers.headers) + 2):
             substrates[headers.headers[i - 2]] = 0
 
-        # counting average water
+        # counting average water 0,3934
         water: float = arithmetical_avg(
-            [float(input_sheet.cell(row=7, column=2).value),
-             float(input_sheet.cell(row=7, column=6).value),
-             float(input_sheet.cell(row=7, column=10).value)])
-
+            [float(input_sheet.cell(row=11, column=2).value),
+             float(input_sheet.cell(row=11, column=6).value),
+             float(input_sheet.cell(row=11, column=10).value)])
+        print(water)
         # counting average of substrates - @water
-        items: list = list(substrates.items())
-        index: int = 0
-        all_values_sum: float = 0
-        for i in range(7, 14 + 1):
+        items = list(substrates.items())
+        index = 0
+        all_values_sum = 0.0
+        for i in range(11, 18 + 1):
             for j in range(2, 5 + 1):
-                if i == 7 and j == 2:
+                if i == 11 and j == 2:
                     continue
                 key_to_change: str = items[index][0]
                 el1 = float(input_sheet.cell(row=i, column=j).value)
@@ -113,11 +113,11 @@ class Calculator:
 
         output_file.save(output_path)
 
-    def calculate_files_for_one(self, files: list):
+    def calculate_files_for_one(self, files: list) -> None:
         output_path: str = self.fill_the_table("", os.path.dirname(files[0]))
-        column: int = 2
+        column = 2
         for file in files:
-            flag: bool = False
+            flag = False
             if file.endswith(".xls") and not(file.endswith(".xlsx")):
                 file = convert_xls_to_xlsx(file)
                 flag = True
@@ -128,7 +128,7 @@ class Calculator:
 
     def calculate_files_for_many(self, files: list):
         for file in files:
-            flag: bool = False
+            flag = False
             if file.endswith(".xls") and not(file.endswith(".xlsx")):
                 file = convert_xls_to_xlsx(file)
                 flag = True
