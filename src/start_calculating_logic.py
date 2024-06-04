@@ -136,19 +136,3 @@ class Calculator:
             self.calculate_logic(file, output_file, 2)
             if flag:
                 os.remove(file)
-
-
-def calculate_files_for_many(files: list):
-    for file in files:
-        flag: bool = False
-        if file.endswith(".xls") and not(file.endswith(".xlsx")):
-            file = convert_xls_to_xlsx(file)
-            flag = True
-        output_file: str = ""
-        for i in file.split("\\"):
-            if i.endswith(".xlsx"):
-                output_file: str = Calculator.fill_the_table("_" + i.rstrip(".xlsx"), os.path.dirname(file))
-                break
-        Calculator.calculate_logic(file, output_file, 2)
-        if flag:
-            os.remove(file)

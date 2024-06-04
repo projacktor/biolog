@@ -141,7 +141,7 @@ class Ui_MainWindow(object):
         self.choose_files_number_label.setText(_translate("MainWindow", "Выберите количество выходных файлов"))
         self.many_files_rbtn.setText(_translate("MainWindow", "несколько файлов"))
         self.single_file_rbtn.setText(_translate("MainWindow", "единственный файл"))
-        self.start_calculating_btn.setText(_translate("MainWindow", "Начать рассчет"))
+        self.start_calculating_btn.setText(_translate("MainWindow", "Начать расчет"))
 
 
 # if __name__ == "__main__":
